@@ -299,6 +299,11 @@ let UIcontroller = (function () {
         variableCloseBtn: 'variableCloseBtn',
         variableSaveBtn: 'variableSaveBtn',
         variableModalGrp: [this.variableBtn, this.variableCloseBtn, this.variableSaveBtn],
+        sheet1Name: 'sheet1Name',
+        sheet2Name: 'sheet1Name',
+        sheet3Name: 'sheet3Name',
+        sheet4Name: 'sheet4Name',
+        sheet5Name: 'sheet5Name',
         sheet1: 'sheet1',
         sheet2: 'sheet2',
         sheet3: 'sheet3',
@@ -494,6 +499,8 @@ let UIcontroller = (function () {
                     return discountInput();
                 case 'var':
                     return variableInput();
+                default: 
+                    break;
             }
         },
 
@@ -554,6 +561,14 @@ let UIcontroller = (function () {
                     break;
                 case 'rad':
                     removeAllDiscounts();
+                    break;
+                case 'var':
+                    document.getElementById('sheet1Name').text = `SHEET#1 - ${data[0]} %`;
+                    document.getElementById('sheet2Name').text = `SHEET#2 - ${data[1]} %`;
+                    document.getElementById('sheet3Name').text = `SHEET#3 - ${data[2]} %`;
+                    document.getElementById('sheet4Name').text = `SHEET#4 - ${data[3]} %`;
+                    document.getElementById('sheet5Name').text = `SHETT#5 - ${data[4]} %`;
+                default:
                     break;
             }
 
@@ -744,6 +759,7 @@ let appController = (function (dataCtrl, UICtrl) {
             setupListeners();
             updateApp();
             UICtrl.onLoad(priceSheets);
+            UICtrl.updateUIModal('var', priceSheets);
         }
     }
 
