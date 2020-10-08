@@ -266,8 +266,7 @@ let dataController = (function () {
 
         getSheet: function () {
             return priceSheet.toArray();
-        },
-
+        }
     }
 
 })();
@@ -413,7 +412,6 @@ let UIcontroller = (function () {
         value = document.getElementById(DOMstrings.discountValueInput).value;
         value = value.replace(',', '.');
 
-
         if (name !== '' && !isNaN(value)) {
             return {
                 discountTypeInput: type,
@@ -445,7 +443,6 @@ let UIcontroller = (function () {
 
             return !isNaN(ele) && ele !== '';
         })
-
 
         if (checkNumber) {
             return newArr;
@@ -552,7 +549,6 @@ let UIcontroller = (function () {
                     addDiscountItem(data);
                     clearDiscountInput();
                     break;
-
                 case 'rdi':
                     removeDiscountItem(ID);
                     break;
@@ -623,8 +619,16 @@ let UIcontroller = (function () {
                 default:
                     break;
             }
-        }
+        },
 
+        onLoad: function (data) {
+            console.log(data);
+            document.getElementById(DOMstrings.sheet1).value = data[0];
+            document.getElementById(DOMstrings.sheet2).value = data[1];
+            document.getElementById(DOMstrings.sheet3).value = data[2];
+            document.getElementById(DOMstrings.sheet4).value = data[3];
+            document.getElementById(DOMstrings.sheet5).value = data[4];
+        }
     }
 
 })();
@@ -736,10 +740,10 @@ let appController = (function (dataCtrl, UICtrl) {
 
     return {
         init: function () {
+            const priceSheets = dataCtrl.getSheet();
             setupListeners();
             updateApp();
-            test();
-
+            UICtrl.onLoad(priceSheets);
         }
     }
 
