@@ -78,10 +78,6 @@ let dataController = (function () {
             this.VAT = 0;
             this.total = 0;
         },
-
-        onLoad: function (type, data, value) {
-            this[data] = Number(value);
-        }
     }
 
     let customerData = {
@@ -169,8 +165,6 @@ let dataController = (function () {
         }
         
         if (data.discountNameInput !== undefined) {
-
-
             if (type === 'fixed') {
                 console.log(type);
                 value = '-' + data.discountValueInput;
@@ -185,11 +179,8 @@ let dataController = (function () {
                 value = parseFloat(value);
             }
              
-
             newDiscount = new Discount(ID, type, name, percent, value);
-
             priceDATA.discounts.push(newDiscount);
-
             return newDiscount;
         }
 
@@ -271,10 +262,6 @@ let dataController = (function () {
             return Object.values(customerData).every(function (ele) {
                 return ele !== null && ele !== '';
             })
-        },
-
-        onLoadData: function (type, data, value) {
-            priceDATA.onLoad(type, data, value);
         },
 
         getSheet: function () {
