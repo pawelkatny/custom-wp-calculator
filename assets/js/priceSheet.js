@@ -3,17 +3,17 @@
 let dataController = (function () {
 
     let Discount = function (id, type, desc, percent = 0, value) {
-            this.ID = id,
+        this.ID = id,
             this.type = type,
             this.desc = desc,
             this.percent = percent,
             this.value = value
     }
 
-    let CartItem = function(id, desc, price) {
+    let Item = function (id, name, value) {
         this.ID = id,
-        this.desc = desc,
-        this.price = price
+            this.name = name,
+            this.value = value
     }
 
     let priceSheet = {
@@ -62,7 +62,7 @@ let dataController = (function () {
         service: 0,
         commision: 0,
         feeTotal: 0,
-        cartItems: [],
+        items: [],
         cartFeeTotal: 0,
         discounts: [],
         discountTotal: 0,
@@ -103,6 +103,15 @@ let dataController = (function () {
         calcDATA.serviceTotal = Number((varF * service).toFixed(2));
         priceDATA.service = calcDATA.serviceTotal;
         priceDATA.activeSheet = Object.values(priceSheet)[data.sheetNumber];
+    }
+
+    let calcItems = function () {
+        let total = 0;
+        priceDATA.items.forEach(ele => {
+            total += ele.value;
+        })
+
+        priceDATA.cartTotal = total;
     }
 
     let calcDiscounts = function () {
@@ -147,8 +156,31 @@ let dataController = (function () {
         priceDATA.total = total;
     }
 
+    const addItem = function (data) {
+        let ID, name, value, newItem;
+
+        if (data) {
+            name = data.itemNameInput;
+            value = parseFloat(data.itemValueInput);
+
+            if (priceDATA.items.length == -1) {
+                ID = 0;
+            } else {
+                ID = priceDATA.items.length;
+            }
+
+
+            newItem = new Item(ID, name, value);
+            priceDATA.items.push(newItem);
+            return newItem;
+        } else {
+            return false;
+        }
+    }
+
+
     let addDiscount = function (data) {
-        let ID, type, name, value, percent;
+        let ID, type, name, value, percent, newDiscount;
 
         type = data.discountTypeInput;
         name = data.discountNameInput;
@@ -163,7 +195,7 @@ let dataController = (function () {
             console.log(data.discountPercent)
             return false;
         }
-        
+
         if (data.discountNameInput !== undefined) {
             if (type === 'fixed') {
                 console.log(type);
@@ -178,16 +210,18 @@ let dataController = (function () {
                 value = '-' + priceDATA.cartFeeTotal * (percent / 100);
                 value = parseFloat(value);
             }
-             
+
             newDiscount = new Discount(ID, type, name, percent, value);
             priceDATA.discounts.push(newDiscount);
             return newDiscount;
         }
-
-
     }
 
-
+    let removeAllItems = function () {
+        priceDATA.items = [];
+        priceDATA.cartTotal = 0;
+        priceDATA.cartSummary = 0;
+    }
 
     let removeAllDiscounts = function () {
         priceDATA.discounts = [];
@@ -198,6 +232,7 @@ let dataController = (function () {
     return {
         calcAll: function (inputData) {
             calcService(inputData);
+            calcItems();
             calcDiscounts();
             calcCommision();
             calcItemsFee();
@@ -206,6 +241,7 @@ let dataController = (function () {
         },
 
         updateModal: function (type, data) {
+            console.log(data)
             switch (type) {
                 case 'cus':
                     customerData.name = data.customerName;
@@ -216,14 +252,16 @@ let dataController = (function () {
                     customerData.angle = data.slopeAngle;
                     customerData.roof = data.roofType;
                     return customerData;
-
+                case 'ite':
+                    return addItem(data);
+                case 'rai':
+                    removeAllItems();
+                    break;
                 case 'dis':
                     return addDiscount(data);
-
                 case 'rsd':
                     removeDiscountItem(data);
                     break;
-
                 case 'rad':
                     removeAllDiscounts();
                     break;
@@ -242,6 +280,19 @@ let dataController = (function () {
 
             if (index !== -1) {
                 priceDATA.discounts.splice(index, 1);
+            }
+        },
+
+        removeItem: function (id) {
+            let ids, index;
+            ids = priceDATA.items.map((current) => {
+                return current.ID;
+            });
+
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                priceDATA.items.splice(index, 1);
             }
         },
 
@@ -309,6 +360,16 @@ let UIcontroller = (function () {
         sheet3: 'sheet3',
         sheet4: 'sheet4',
         sheet5: 'sheet5',
+        //items
+        itemModal: 'itemModal',
+        itemContainer: 'itemContainer',
+        itemCloseBtn: 'itemsCloseBtn',
+        itemModalBtn: 'itemModalBtn',
+        itemSaveBtn: 'itemSaveBtn',
+        itemResetBtn: 'raitemsResetBtn',
+        itemNameInput: 'itemNameInput',
+        itemValueInput: 'itemValueInput',
+        itemModalGrp: [this.itemModalBtn, this.itemCloseBtn, this.itemSaveBtn],
         //zniżki
         discountModalBtn: 'discountModal',
         discountModal: 'discountModal',
@@ -351,13 +412,42 @@ let UIcontroller = (function () {
 
     }
 
+    let addItem = function (data) {
+        let html, newHtml, container;
+
+        if (data) {
+            console.log(data);
+            container = document.getElementById(DOMstrings.itemContainer);
+            html = `
+                <li class="list-group-item d-flex justify-content-between align-items-center %border%" id="%id%">
+                    %description%
+                    <div>
+                        <span class="h5">%value%</span>
+                        <button type="button" class="close ml-2">
+                            <span class="del-item">&times;</span>
+                        </button>
+                    </div>
+                </li>
+                `;
+
+            newHtml = html.replace('%id%', data.ID);
+            newHtml = newHtml.replace('%description%', data.name);
+            newHtml = newHtml.replace('%value%', data.value.toFixed(2));
+
+            if (!container.hasChildNodes()) {
+                newHtml.replace('%border%', '');
+            }
+            container.insertAdjacentHTML('beforeend', newHtml);
+        }
+    }
+
     let addDiscountItem = function (data) {
         let html, newHtml, container;
         console.log(data);
         if (data === false) {
             alert('Maksymalna ilość zniżek procentowych wynosi jeden.');
         }
- 
+
         if (data !== undefined && data != false) {
             container = document.getElementById(DOMstrings.discountContainer);
             html = `
@@ -384,6 +474,17 @@ let UIcontroller = (function () {
 
     }
 
+    let clearItemInput = function () {
+        document.getElementById(DOMstrings.itemNameInput).value = '';
+        document.getElementById(DOMstrings.itemValueInput).value = '';
+    }
+
+    let removeAllItems = function () {
+        const parent = document.getElementById(DOMstrings.itemContainer);
+        while (parent.hasChildNodes()) {
+            parent.removeChild(parent.lastChild);
+        }
+    }
 
     let removeAllDiscounts = function () {
         const parent = document.getElementById(DOMstrings.discountContainer);
@@ -457,6 +558,23 @@ let UIcontroller = (function () {
         }
     }
 
+    const itemInput = function () {
+        let name, value;
+
+        name = document.getElementById(DOMstrings.itemNameInput).value;
+        value = document.getElementById(DOMstrings.itemValueInput).value;
+        value = value.replace(',', '.');
+
+        if (name !== '' && !isNaN(value)) {
+            return {
+                itemNameInput: name,
+                itemValueInput: value
+            }
+        } else {
+            alert('Entered value is not a number.')
+            return false;
+        }
+    }
 
 
     return {
@@ -499,7 +617,9 @@ let UIcontroller = (function () {
                     return discountInput();
                 case 'var':
                     return variableInput();
-                default: 
+                case 'ite':
+                    return itemInput();
+                default:
                     break;
             }
         },
@@ -522,7 +642,9 @@ let UIcontroller = (function () {
             document.getElementById(DOMstrings.feeSummary).innerHTML = priceData.feeTotal.toFixed(2);
             //discounts
             document.getElementById(DOMstrings.discountTotal).innerHTML = priceData.discountTotal.toFixed(2);
-            //cart total
+            //items total
+            document.getElementById(DOMstrings.cartTotal).innerHTML = priceData.cartTotal.toFixed(2);
+            //cart total in summary
             document.getElementById(DOMstrings.cartSummary).innerHTML = priceData.cartTotal.toFixed(2);
             //items + fee total
             document.getElementById(DOMstrings.cartFeeSummary).innerHTML = priceData.cartFeeTotal.toFixed(2);
@@ -550,7 +672,13 @@ let UIcontroller = (function () {
                     document.getElementById(DOMstrings.angle).innerHTML = data.angle;
                     //roof type
                     document.getElementById(DOMstrings.roof).innerHTML = data.roof;
-
+                    break;
+                case 'ite':
+                    addItem(data);
+                    clearItemInput();
+                    break;
+                case 'rai':
+                    removeAllItems()
                     break;
                 case 'dis':
                     addDiscountItem(data);
@@ -575,6 +703,11 @@ let UIcontroller = (function () {
         },
 
         removeDiscountItem: function (selectorID) {
+            let ele = document.getElementById(selectorID);
+            ele.parentNode.removeChild(ele);
+        },
+
+        removeItem: function (selectorID) {
             let ele = document.getElementById(selectorID);
             ele.parentNode.removeChild(ele);
         },
@@ -617,9 +750,11 @@ let UIcontroller = (function () {
 
         toggleModal: function (e) {
             let string = e.target.id.substring(0, 3);
+            console.log(string)
             const customer = document.getElementById(DOMstrings.customerModal);
             const discount = document.getElementById(DOMstrings.discountModal);
             const variable = document.getElementById(DOMstrings.variableModal);
+            const items = document.getElementById(DOMstrings.itemModal)
 
             switch (string) {
                 case 'cus':
@@ -630,6 +765,9 @@ let UIcontroller = (function () {
                     break;
                 case 'var':
                     variable.classList.toggle('toggle-modal');
+                    break;
+                case 'ite':
+                    items.classList.toggle('toggle-modal');
                     break;
                 default:
                     break;
@@ -669,7 +807,14 @@ let appController = (function (dataCtrl, UICtrl) {
             ele.addEventListener('click', UICtrl.toggleModal);
         })
 
+        DOM.itemModalGrp.forEach(function (ele) {
+            ele.addEventListener('click', UICtrl.toggleModal);
+        })
+
         document.getElementById(DOM.customerSaveBtn).addEventListener('click', updateModal);
+        document.getElementById(DOM.itemSaveBtn).addEventListener('click', updateModal);
+        document.getElementById(DOM.itemResetBtn).addEventListener('click', updateModal);
+        document.getElementById(DOM.itemContainer).addEventListener('click', removeItem);
         document.getElementById(DOM.discountSaveBtn).addEventListener('click', updateModal);
         document.getElementById(DOM.discountResetBtn).addEventListener('click', updateModal);
         document.getElementById(DOM.discountContainer).addEventListener('click', removeDiscountItem);
@@ -694,6 +839,18 @@ let appController = (function (dataCtrl, UICtrl) {
         UICtrl.updateUIModal(string, data);
         updateApp();
 
+    }
+
+    const removeItem = function (e) {
+        let itemID;
+
+        if (e.target.className === 'del-item') {
+            itemID = e.target.parentElement.parentElement.parentElement.id;
+            itemID = Number(itemID);
+            dataCtrl.removeItem(itemID);
+            UICtrl.removeItem(itemID);
+            updateApp();
+        }
     }
 
     const removeDiscountItem = function (e) {
