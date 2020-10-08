@@ -582,13 +582,13 @@ let UIcontroller = (function () {
             let varU, tempServiceInput, tempSheetNumber, inputs;
 
             varU = document.getElementById(DOMstrings.varU).value;
-            varU = varU.replace(',', '.');
-            varU = parseFloat(varU);
-            tempServiceInput = parseFloat(document.getElementById(DOMstrings.serviceInput).value);
+            varU = Number(varU.replace(',', '.'));
+            tempServiceInput = document.getElementById(DOMstrings.serviceInput).value;
+            tempServiceInput = Number(tempServiceInput.replace(',', '.'));
 
             sheetNumber = document.getElementById(DOMstrings.sheetNumber).selectedIndex;
 
-            if (!isNaN(varU) && !isNaN(tempServiceInput)) {
+            if (!isNaN(varU) && !isNaN(tempServiceInput) && (varU !== '' || tempServiceInput !== '')) {
                 inputs = {
                     varU: varU,
                     serviceInput: tempServiceInput,
@@ -600,7 +600,7 @@ let UIcontroller = (function () {
                     serviceInput: 0,
                     sheetNumber: sheetNumber,
                 }
-
+                alert('Entered value(s) are not number(s).')
             }
 
             return inputs;
@@ -827,7 +827,9 @@ let appController = (function (dataCtrl, UICtrl) {
 
     const updateApp = function () {
         let input = UICtrl.getInput();
-        dataCtrl.calcAll(input);
+        if (input) {
+            dataCtrl.calcAll(input);
+        }
         let data = dataCtrl.getData();
         UICtrl.updateUI(data.calculations, data.prices);
     }
