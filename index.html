@@ -236,7 +236,8 @@
                                 </li>
                                 <li class="list-group-item">
                                     <div class="form-group">
-                                        <label for="formGroupExampleInput" class="font-weight-bold">Annual demand U [kWh]</label>
+                                        <label for="formGroupExampleInput" class="font-weight-bold">Annual demand U
+                                            [kWh]</label>
                                         <input type="text" class="form-control text-center" id="varU" placeholder="">
                                     </div>
                                 </li>
@@ -246,13 +247,16 @@
                                 <li class="list-group-item text-center h5" id="varF"></li>
                                 <li class="list-group-item">
                                     <div class="form-group">
-                                        <label for="formGroupExampleInput" class="font-weight-bold">Servive per one F [PLN]</label>
-                                        <input type="text" class="form-control text-center" id="serviceInput" placeholder="">
+                                        <label for="formGroupExampleInput" class="font-weight-bold">Servive per one F
+                                            [PLN]</label>
+                                        <input type="text" class="form-control text-center" id="serviceInput"
+                                            placeholder="">
                                     </div>
                                 </li>
                                 <li class="list-group-item text-center font-weight-bold">Service total [PLN]</li>
                                 <li class="list-group-item text-center h5" id="serviceInputTotal"></li>
-                                <li class="list-group-item text-center font-weight-bold">Distribution commission [PLN]</li>
+                                <li class="list-group-item text-center font-weight-bold">Distribution commission [PLN]
+                                </li>
                                 <li class="list-group-item text-center h5" id="commision"></li>
                             </ul>
                             <div class="card-body text-center">
@@ -264,120 +268,134 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 mt-4 mt-lg-0" >
+                    <div class="col-lg-8 mt-4 mt-lg-0">
                         <!-- DANE KLIENTA -->
-                        <div class="border mb-3">
-                            <ul class="list-unstyled mt-3 px-3">
-                                <li>First name and surbname: <span class="font-weight-bold" id="fullName"></span></li>
-                                <li>Phone: <span class="font-weight-bold" id="phoneNumber"></span></li>
-                                <li>E-mail: <span class="font-weight-bold" id="emailAdress"></span></li>
-                            </ul>
-                            <ul class="list-unstyled mt-3 px-3">
-                                <li>Position towards Sun: <span class="font-weight-bold" id="sun"></span></li>
-                                <li>Roof tilt: <span class="font-weight-bold" id="angle"></span></li>
-                                <li>Roof covering: <span class="font-weight-bold" id="roof"></span></li>
-                            </ul>
-                        </div>
-
-                        <!-- MATERIAŁY Z KOSZYKA -->
-                        <div class="card border-0">
-                            <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Items
-                                <div id='itemDiv'>
-                                    <button type="button" class="btn btn-primary" id="itemModalBtn">Add</button>
-                                    <button type="button" class="btn btn-warning" id="raitemsResetBtn">Reset</button>
-                                </div>
+                        <div id="printPdf">
+                            <div class="border mb-3">
+                                <ul class="list-unstyled mt-3 px-3">
+                                    <li>First name and surbname: <span class="font-weight-bold" id="fullName"></span>
+                                    </li>
+                                    <li>Phone: <span class="font-weight-bold" id="phoneNumber"></span></li>
+                                    <li>E-mail: <span class="font-weight-bold" id="emailAdress"></span></li>
+                                </ul>
+                                <ul class="list-unstyled mt-3 px-3">
+                                    <li>Position towards Sun: <span class="font-weight-bold" id="sun"></span></li>
+                                    <li>Roof tilt: <span class="font-weight-bold" id="angle"></span></li>
+                                    <li>Roof covering: <span class="font-weight-bold" id="roof"></span></li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush" id="itemContainer">
 
-                            </ul>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
-                                    Total
-                                    <span class="h5" id="cartTotal">0</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- OPŁATY DODATKOWE MONTAZ + PROWIZJA -->
-                        <div class="card border-0 mt-4">
-                            <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Additional fees
-                                <span class="">Net price</span>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Service
-                                    <span class="h5" id="serviceUI"></span>
-                                </li>
-                                <li class="list-group-item bg-light d-flex justify-content-between align-items-center font-weight-bold">
-                                    Total
-                                    <span class="h5" id="feeTotal"></span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- ZNIZKI -->
-                        <div class="card border-0 mt-4">
-                            <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Discounts
-                                <div id='discountDiv'>
-                                    <button type="button" class="btn btn-primary" id="discountModalBtn">Add</button>
-                                    <button type="button" class="btn btn-warning" id="radiscountResetBtn">Reset</button>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush" id="discountContainer">
-
-                            </ul>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-light font-weight-bold  d-flex justify-content-between align-items-center" id="discountTotalList">
-                                    Total
-                                    <span class="h5" id="discountTotal">0</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- PODSUMOWANIE -->
-                        <div class="card border-0 mt-4">
-                            <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Summary
-                                <span class="">Cena</span>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <!-- MATERIAŁY Z KOSZYKA -->
+                            <div class="card border-0">
+                                <div
+                                    class="card-header d-flex justify-content-between align-items-center font-weight-bold">
                                     Items
-                                    <span class="h5" id="cartSummary">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div id='itemDiv'>
+                                        <button type="button" class="btn btn-primary" id="itemModalBtn">Add</button>
+                                        <button type="button" class="btn btn-warning"
+                                            id="raitemsResetBtn">Reset</button>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush" id="itemContainer">
+
+                                </ul>
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
+                                        Total
+                                        <span class="h5" id="cartTotal">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- OPŁATY DODATKOWE MONTAZ + PROWIZJA -->
+                            <div class="card border-0 mt-4">
+                                <div
+                                    class="card-header d-flex justify-content-between align-items-center font-weight-bold">
                                     Additional fees
-                                    <span class="h5" id="feeSummary">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-end align-items-center">
-                                    <span class="h5 font-weight-bold" id="cartFeeSummary">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    VAT
-                                    <span class="h5" id="VAT">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="">Net price</span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Service
+                                        <span class="h5" id="serviceUI"></span>
+                                    </li>
+                                    <li
+                                        class="list-group-item bg-light d-flex justify-content-between align-items-center font-weight-bold">
+                                        Total
+                                        <span class="h5" id="feeTotal"></span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- ZNIZKI -->
+                            <div class="card border-0 mt-4">
+                                <div
+                                    class="card-header d-flex justify-content-between align-items-center font-weight-bold">
                                     Discounts
-                                    <span class="h5" id="discountSummary">0</span>
-                                </li>
-                                <li class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
-                                    Total
-                                    <span class="h5 font-weight-bold" id="total">0</span>
-                                </li>
-                            </ul>
+                                    <div id='discountDiv'>
+                                        <button type="button" class="btn btn-primary" id="discountModalBtn">Add</button>
+                                        <button type="button" class="btn btn-warning"
+                                            id="radiscountResetBtn">Reset</button>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush" id="discountContainer">
+
+                                </ul>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-light font-weight-bold  d-flex justify-content-between align-items-center"
+                                        id="discountTotalList">
+                                        Total
+                                        <span class="h5" id="discountTotal">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- PODSUMOWANIE -->
+                            <div class="card border-0 mt-4">
+                                <div
+                                    class="card-header d-flex justify-content-between align-items-center font-weight-bold">
+                                    Summary
+                                    <span class="">Cena</span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Items
+                                        <span class="h5" id="cartSummary">0</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Additional fees
+                                        <span class="h5" id="feeSummary">0</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-end align-items-center">
+                                        <span class="h5 font-weight-bold" id="cartFeeSummary">0</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        VAT
+                                        <span class="h5" id="VAT">0</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Discounts
+                                        <span class="h5" id="discountSummary">0</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
+                                        Total
+                                        <span class="h5 font-weight-bold" id="total">0</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-
             </div>
+
         </div>
     </div>
+    </div>
 
-    <div class="w-100 text-center mb-5"><button class="btn btn-lg btn-primary" id="printPdfBtn">SAVE TO PDF</button></div>
+    <div class="w-100 text-center mb-5"><button class="btn btn-lg btn-primary" id="printPdfBtn">SAVE TO PDF</button>
+    </div>
 
 </body>
 
