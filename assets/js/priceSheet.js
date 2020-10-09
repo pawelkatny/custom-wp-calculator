@@ -1,8 +1,8 @@
 // import { html2pdf } from 'html2pdf.bundle.min.js';
 
-let dataController = (function () {
+const dataController = (function () {
 
-    let Discount = function (id, type, desc, percent = 0, value) {
+    const Discount = function (id, type, desc, percent = 0, value) {
         this.ID = id,
             this.type = type,
             this.desc = desc,
@@ -10,13 +10,13 @@ let dataController = (function () {
             this.value = value
     }
 
-    let Item = function (id, name, value) {
+    const Item = function (id, name, value) {
         this.ID = id,
             this.name = name,
             this.value = value
     }
 
-    let priceSheet = {
+    const priceSheet = {
         sheet1: 5,
         sheet2: 10,
         sheet3: 15,
@@ -40,7 +40,7 @@ let dataController = (function () {
         }
     }
 
-    let calcDATA = {
+    const calcDATA = {
         varU: 0,
         varFi: 0,
         varF: 0,
@@ -56,7 +56,7 @@ let dataController = (function () {
         }
     };
 
-    let priceDATA = {
+    const priceDATA = {
         activeSheet: null,
         cartTotal: 0,
         service: 0,
@@ -80,7 +80,7 @@ let dataController = (function () {
         },
     }
 
-    let customerData = {
+    const customerData = {
         name: null,
         lastName: null,
         phoneNumber: null,
@@ -90,7 +90,7 @@ let dataController = (function () {
         roof: null
     }
 
-    let calcService = function (data) {
+    const calcService = function (data) {
         let varU, varFi, varF, service;
         varU = data.varU;
         varFi = varU * 1.25;
@@ -105,7 +105,7 @@ let dataController = (function () {
         priceDATA.activeSheet = Object.values(priceSheet)[data.sheetNumber];
     }
 
-    let calcItems = function () {
+    const calcItems = function () {
         let total = 0;
         priceDATA.items.forEach(ele => {
             total += ele.value;
@@ -114,7 +114,7 @@ let dataController = (function () {
         priceDATA.cartTotal = total;
     }
 
-    let calcDiscounts = function () {
+    const calcDiscounts = function () {
         let total = 0;
         priceDATA.discounts.forEach(ele => {
             total += ele.value;
@@ -123,7 +123,7 @@ let dataController = (function () {
         priceDATA.discountTotal = total;
     }
 
-    let calcCommision = function () {
+    const calcCommision = function () {
         let total = 0;
         if (priceDATA.service > 0) {
             total = (priceDATA.cartTotal + priceDATA.service) * (priceDATA.activeSheet / 100);
@@ -131,14 +131,14 @@ let dataController = (function () {
         priceDATA.commision = total;
     }
 
-    let calcItemsFee = function () {
+    const calcItemsFee = function () {
         let total = 0;
         priceDATA.feeTotal = priceDATA.service + priceDATA.commision;
         total = priceDATA.cartTotal + priceDATA.feeTotal;
         priceDATA.cartFeeTotal = total;
     }
 
-    let calcVAT = function () {
+    const calcVAT = function () {
         let total = 0;
         let vat = 0.08;
         let vat23 = 0.23
@@ -150,7 +150,7 @@ let dataController = (function () {
         priceDATA.VAT = total;
     };
 
-    let calcTotal = function () {
+    const calcTotal = function () {
         let total = 0;
         total = priceDATA.cartFeeTotal + priceDATA.discountTotal + priceDATA.VAT
         priceDATA.total = total;
@@ -179,7 +179,7 @@ let dataController = (function () {
     }
 
 
-    let addDiscount = function (data) {
+    const addDiscount = function (data) {
         let ID, type, name, value, percent, newDiscount;
 
         type = data.discountTypeInput;
@@ -192,13 +192,11 @@ let dataController = (function () {
         }
 
         if (priceDATA.discountPercent > 0 && type === 'percent') {
-            console.log(data.discountPercent)
             return false;
         }
 
         if (data.discountNameInput !== undefined) {
             if (type === 'fixed') {
-                console.log(type);
                 value = '-' + data.discountValueInput;
                 value = value.replace(',', '.');
                 value = Number(parseFloat(value).toFixed(2));
@@ -217,13 +215,13 @@ let dataController = (function () {
         }
     }
 
-    let removeAllItems = function () {
+    const removeAllItems = function () {
         priceDATA.items = [];
         priceDATA.cartTotal = 0;
         priceDATA.cartSummary = 0;
     }
 
-    let removeAllDiscounts = function () {
+    const removeAllDiscounts = function () {
         priceDATA.discounts = [];
         priceDATA.discountTotal = 0;
         priceDATA.discountPercent = 0;
@@ -241,7 +239,6 @@ let dataController = (function () {
         },
 
         updateModal: function (type, data) {
-            console.log(data)
             switch (type) {
                 case 'cus':
                     customerData.name = data.customerName;
@@ -259,9 +256,7 @@ let dataController = (function () {
                     break;
                 case 'dis':
                     return addDiscount(data);
-                case 'rsd':
-                    removeDiscountItem(data);
-                    break;
+
                 case 'rad':
                     removeAllDiscounts();
                     break;
@@ -323,7 +318,7 @@ let dataController = (function () {
 })();
 
 let UIcontroller = (function () {
-    let DOMstrings = {
+    const DOMstrings = {
         //dane klienta
         customerBtn: 'customerBtn',
         customerCloseBtn: 'customerCloseBtn',
@@ -412,11 +407,10 @@ let UIcontroller = (function () {
 
     }
 
-    let addItem = function (data) {
+    const addItem = function (data) {
         let html, newHtml, container;
 
         if (data) {
-            console.log(data);
             container = document.getElementById(DOMstrings.itemContainer);
             html = `
                 <li class="list-group-item d-flex justify-content-between align-items-center %border%" id="%id%">
@@ -441,9 +435,8 @@ let UIcontroller = (function () {
         }
     }
 
-    let addDiscountItem = function (data) {
+    const addDiscountItem = function (data) {
         let html, newHtml, container;
-        console.log(data);
         if (data === false) {
             alert('Maksymalna ilość zniżek procentowych wynosi jeden.');
         }
@@ -474,31 +467,31 @@ let UIcontroller = (function () {
 
     }
 
-    let clearItemInput = function () {
+    const clearItemInput = function () {
         document.getElementById(DOMstrings.itemNameInput).value = '';
         document.getElementById(DOMstrings.itemValueInput).value = '';
     }
 
-    let removeAllItems = function () {
+    const removeAllItems = function () {
         const parent = document.getElementById(DOMstrings.itemContainer);
         while (parent.hasChildNodes()) {
             parent.removeChild(parent.lastChild);
         }
     }
 
-    let removeAllDiscounts = function () {
+    const removeAllDiscounts = function () {
         const parent = document.getElementById(DOMstrings.discountContainer);
         while (parent.hasChildNodes()) {
             parent.removeChild(parent.lastChild);
         }
     }
 
-    let clearDiscountInput = function () {
+    const clearDiscountInput = function () {
         document.getElementById(DOMstrings.discountNameInput).value = '';
         document.getElementById(DOMstrings.discountValueInput).value = '';
     }
 
-    let customerInput = function () {
+    const customerInput = function () {
         return {
             customerName: document.getElementById(DOMstrings.customerName).value,
             customerLastName: document.getElementById(DOMstrings.customerLastName).value,
@@ -510,7 +503,7 @@ let UIcontroller = (function () {
         }
     }
 
-    let discountInput = function () {
+    const discountInput = function () {
         let name, value, type;
 
         type = document.getElementById(DOMstrings.discountTypeInput).value;
@@ -530,7 +523,7 @@ let UIcontroller = (function () {
         }
     }
 
-    let variableInput = function () {
+    const variableInput = function () {
         let sheet1, sheet2, sheet3, sheet4, sheet5, sheetArr, checkNumber, newArr = [];
 
         sheet1 = document.getElementById(DOMstrings.sheet1).value;
@@ -576,16 +569,14 @@ let UIcontroller = (function () {
         }
     }
 
-
     return {
         getInput: function () {
-            let varU, tempServiceInput, tempSheetNumber, inputs;
+            let varU, tempServiceInput, inputs;
 
             varU = document.getElementById(DOMstrings.varU).value;
             varU = Number(varU.replace(',', '.'));
             tempServiceInput = document.getElementById(DOMstrings.serviceInput).value;
             tempServiceInput = Number(tempServiceInput.replace(',', '.'));
-
             sheetNumber = document.getElementById(DOMstrings.sheetNumber).selectedIndex;
 
             if (!isNaN(varU) && !isNaN(tempServiceInput) && (varU !== '' || tempServiceInput !== '')) {
@@ -606,10 +597,8 @@ let UIcontroller = (function () {
             return inputs;
         },
 
-
         //get input from modals depending on type
         getModalInput: function (type) {
-
             switch (type) {
                 case 'cus':
                     return customerInput()
@@ -625,7 +614,6 @@ let UIcontroller = (function () {
         },
 
         //reset modal input 
-
         updateUI: function (calcData, priceData) {
             //varFi
             document.getElementById(DOMstrings.varFi).innerHTML = calcData.varFi.toFixed(2);
@@ -713,8 +701,7 @@ let UIcontroller = (function () {
         },
 
         clearInput: function () {
-            let inputsArr = [],
-                varU, serviceInput;
+            let inputsArr = [], varU, serviceInput;
 
             varU = document.getElementById(DOMstrings.varU);
             serviceInput = document.getElementById(DOMstrings.serviceInput);
@@ -740,8 +727,6 @@ let UIcontroller = (function () {
             return DOMstrings;
         },
 
-
-
         getCartTotal: function () {
             return {
                 cartTotal: document.getElementById(DOMstrings.cartTotal).innerHTML,
@@ -750,7 +735,6 @@ let UIcontroller = (function () {
 
         toggleModal: function (e) {
             let string = e.target.id.substring(0, 3);
-            console.log(string)
             const customer = document.getElementById(DOMstrings.customerModal);
             const discount = document.getElementById(DOMstrings.discountModal);
             const variable = document.getElementById(DOMstrings.variableModal);
@@ -775,7 +759,6 @@ let UIcontroller = (function () {
         },
 
         onLoad: function (data) {
-            console.log(data);
             document.getElementById(DOMstrings.sheet1).value = data[0];
             document.getElementById(DOMstrings.sheet2).value = data[1];
             document.getElementById(DOMstrings.sheet3).value = data[2];
@@ -821,15 +804,15 @@ let appController = (function (dataCtrl, UICtrl) {
         document.getElementById(DOM.customerResetBtn).addEventListener('click', resetCustomerInput);
         document.getElementById(DOM.variableSaveBtn).addEventListener('click', updateModal);
         document.getElementById(DOM.printPdfBtn).addEventListener('click', saveToPdf);
-
-
     }
 
     const updateApp = function () {
         let input = UICtrl.getInput();
+
         if (input) {
             dataCtrl.calcAll(input);
         }
+
         let data = dataCtrl.getData();
         UICtrl.updateUI(data.calculations, data.prices);
     }
@@ -840,7 +823,6 @@ let appController = (function (dataCtrl, UICtrl) {
         let data = dataCtrl.updateModal(string, input);
         UICtrl.updateUIModal(string, data);
         updateApp();
-
     }
 
     const removeItem = function (e) {
@@ -879,7 +861,6 @@ let appController = (function (dataCtrl, UICtrl) {
 
     const saveToPdf = function () {
         let data = dataCtrl.checkCustomerData();
-        console.log(data)
         if (data) {
             let element = document.getElementById('printPdf');
             let discountDivs = document.getElementById('discountDiv');
@@ -899,17 +880,6 @@ let appController = (function (dataCtrl, UICtrl) {
         } else {
             alert("Wprowadz dane klienta.");
         }
-
-
-    }
-    const test = function () {
-        // let data = dataCtrl.getData();
-        // data = Object.values(data.sheet)
-        // data = data.slice(0, -1)
-        // console.log(data);
-
-        let data = dataCtrl.getSheet();
-
     }
 
     return {
