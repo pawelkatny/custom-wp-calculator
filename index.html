@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/css/priceSheetStyles.css">
     <script src="assets/js/html2pdf.bundle.min.js" defer></script>
     <script src="assets/js/priceSheet.js" defer></script>
-    <title>Document</title>
+    <title>Pricing sheet</title>
 </head>
 
 <body>
@@ -18,65 +18,66 @@
         <div class="modal-dialog modal-dialog-custom">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edytuj dane klienta</h5>
+                    <h5 class="modal-title">Edit customer data</h5>
                     <button type="button" class="close">
                         <span id="customerCloseBtn">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Imię</label>
+                        <label>First Name</label>
                         <input type="text" class="form-control text-center" id="customerName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Nazwisko</label>
+                        <label>Last Name</label>
                         <input type="text" class="form-control text-center" id="customerLastName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Numer telefonu</label>
+                        <label>Phone</label>
                         <input type="text" class="form-control text-center" id="customerPhone" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Adres e-mail</label>
+                        <label>E-mail</label>
                         <input type="text" class="form-control text-center" id="customerEmail" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Orientacja względem słońca</label>
+                        <label>Position towards Sun</label>
                         <select class="form-control text-center" id="sunOrientation">
-                            <option value=" - ">wybierz...</option>
-                            <option value="wschód">Wschód</option>
-                            <option value="zachód">Zachód</option>
-                            <option value="południe">Południe</option>
-                            <option value="południowy wschód">Południowy wschód</option>
-                            <option value="południowy zachód">Południowy zachód</option>
+                            <option value=" - ">choose...</option>
+                            <option value="wschód">East</option>
+                            <option value="zachód">West</option>
+                            <option value="południe">South</option>
+                            <option value="południowy wschód">South-East</option>
+                            <option value="południowy zachód">South-West</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Kąt nachylenia dachu</label>
+                        <label>Roof tilt</label>
                         <select class="form-control" id="slopeAngle">
-                            <option value=" - ">wybierz...</option>
-                            <option value="0">Płaski</option>
-                            <option value="15">15 Stopni</option>
-                            <option value="30">30 Stopni</option>
-                            <option value="40">40 Stopni</option>
-                            <option value="45">45 Stopni</option>
-                            <option value="60">60 Stopni</option>
+                            <option value=" - ">choose...</option>
+                            <option value="0">Flat</option>
+                            <option value="15">15 degrees</option>
+                            <option value="30">30 degrees</option>
+                            <option value="40">40 degrees</option>
+                            <option value="45">45 degrees</option>
+                            <option value="60">60 degrees</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Rodzaj pokrycia dachu</label>
+                        <label>Roof covering</label>
                         <select class="form-control" id="roofType">
-                            <option value=" - ">wybierz...</option>
-                            <option value="dachówka">Dachówka</option>
-                            <option value="blachodachówka">Blachodachówka</option>
-                            <option value="gont bitumiczny">Gont bitumiczny</option>
-                            <option value="papa">Papa</option>
+                            <option value=" - ">choose...</option>
+                            <option value="dachówka">Tile</option>
+                            <option value="blachodachówka">Plate tile</option>
+                            <option value="gont bitumiczny">
+                                Bituminous shingle</option>
+                            <option value="papa">Roofing felt</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" id="customerResetBtn">Resetuj</button>
-                    <button type="button" class="btn btn-primary" id="customerSaveBtn">Zapisz</button>
+                    <button type="button" class="btn btn-warning" id="customerResetBtn">Reset</button>
+                    <button type="button" class="btn btn-primary" id="customerSaveBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -86,30 +87,30 @@
         <div class="modal-dialog modal-dialog-custom">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Dodaj zniżkę</h5>
+                    <h5 class="modal-title">Add discount</h5>
                     <button type="button" class="close">
                         <span id="discountCloseBtn">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Typ</label>
+                        <label>Type</label>
                         <select class="form-control" id="discountTypeInput">
-                            <option value="fixed">Kwota</option>
-                            <option value="percent">Procent</option>
+                            <option value="fixed">Fixed</option>
+                            <option value="percent">Percent</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Nazwa</label>
+                        <label>Name</label>
                         <input type="text" class="form-control text-center" id="discountNameInput" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Wartość</label>
+                        <label>Value</label>
                         <input type="text" class="form-control text-center" id="discountValueInput" placeholder="">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="discountSaveBtn">Zapisz</button>
+                    <button type="button" class="btn btn-primary" id="discountSaveBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -119,23 +120,23 @@
         <div class="modal-dialog modal-dialog-custom">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Dodaj product</h5>
+                    <h5 class="modal-title">Add item</h5>
                     <button type="button" class="close">
                         <span id="itemCloseBtn">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nazwa</label>
+                        <label>Name</label>
                         <input type="text" class="form-control text-center" id="itemNameInput" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Wartość</label>
+                        <label>Value</label>
                         <input type="text" class="form-control text-center" id="itemValueInput" placeholder="">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="itemSaveBtn">Zapisz</button>
+                    <button type="button" class="btn btn-primary" id="itemSaveBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -145,7 +146,7 @@
         <div class="modal-dialog modal-dialog-custom">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edytuj zmienne</h5>
+                    <h5 class="modal-title">Edit variables</h5>
                     <button type="button" class="close">
                         <span id="variableCloseBtn">&times;</span>
                     </button>
@@ -153,7 +154,7 @@
                 <div class="modal-body font-weight-bold">
                     <div class="form-group">
                         <div class="row justify-content-center">
-                            <div class="col-3 align-self-center">Arkusz #1</div>
+                            <div class="col-3 align-self-center">Sheet #1</div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="sheet1" placeholder="">
                             </div>
@@ -162,7 +163,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-center">
-                            <div class="col-3 align-self-center">Arkusz #2</div>
+                            <div class="col-3 align-self-center">Sheet #2</div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="sheet2" placeholder="">
                             </div>
@@ -171,7 +172,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-center">
-                            <div class="col-3 align-self-center">Arkusz #3</div>
+                            <div class="col-3 align-self-center">Sheet #3</div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="sheet3" placeholder="">
                             </div>
@@ -180,7 +181,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-center">
-                            <div class="col-3 align-self-center">Arkusz #4</div>
+                            <div class="col-3 align-self-center">Sheet #4</div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="sheet4" placeholder="">
                             </div>
@@ -189,7 +190,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-center">
-                            <div class="col-3 align-self-center">Arkusz #5</div>
+                            <div class="col-3 align-self-center">Sheet #5</div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="sheet5" placeholder="">
                             </div>
@@ -198,7 +199,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="variableSaveBtn">Zapisz</button>
+                    <button type="button" class="btn btn-primary" id="variableSaveBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -209,10 +210,10 @@
     <div class="modal-dialog modal-xl sheet-container">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Arkusz wyceny</h5>
+                <h5 class="modal-title">Pricing sheet</h5>
                 <div>
-                    <button type="button" class="btn btn-primary" id="customerBtn">Dane klienta</button>
-                    <button type="button" class="btn btn-primary" id="variableBtn">Edytuj zmienne</button>
+                    <button type="button" class="btn btn-primary" id="customerBtn">Customer data</button>
+                    <button type="button" class="btn btn-primary" id="variableBtn">Edit variables</button>
                 </div>
 
             </div>
@@ -221,45 +222,45 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body text-center">
-                                <h5 class="card-title">Obliczenia</h5>
+                                <h5 class="card-title">Calculations</h5>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <select class="form-control text-center" id="sheetNumber">
-                                        <option id="sheet1Name">Arkusz #1</option>
-                                        <option id="sheet2Name">Arkusz #2</option>
-                                        <option id="sheet3Name">Arkusz #3</option>
-                                        <option id="sheet4Name">Arkusz #4</option>
-                                        <option id="sheet5Name">Arkusz #5</option>
+                                        <option id="sheet1Name"></option>
+                                        <option id="sheet2Name"></option>
+                                        <option id="sheet3Name"></option>
+                                        <option id="sheet4Name"></option>
+                                        <option id="sheet5Name"></option>
                                     </select>
                                 </li>
                                 <li class="list-group-item">
                                     <div class="form-group">
-                                        <label for="formGroupExampleInput" class="font-weight-bold">Zapotrzebowanie roczne U [kWh]</label>
+                                        <label for="formGroupExampleInput" class="font-weight-bold">Annual demand U [kWh]</label>
                                         <input type="text" class="form-control text-center" id="varU" placeholder="">
                                     </div>
                                 </li>
-                                <li class="list-group-item font-weight-bold">Zapotrzebowanie Fi [kWh] (=Ux125%)</li>
+                                <li class="list-group-item font-weight-bold">Demand Fi [kWh] (=Ux125%)</li>
                                 <li class="list-group-item text-center h5" id="varFi"></li>
-                                <li class="list-group-item font-weight-bold">Moc F [kWh] (=Fi:1000)</li>
+                                <li class="list-group-item font-weight-bold">Power F [kWh] (=Fi:1000)</li>
                                 <li class="list-group-item text-center h5" id="varF"></li>
                                 <li class="list-group-item">
                                     <div class="form-group">
-                                        <label for="formGroupExampleInput" class="font-weight-bold">Robocizna [PLN]</label>
+                                        <label for="formGroupExampleInput" class="font-weight-bold">Servive per one F [PLN]</label>
                                         <input type="text" class="form-control text-center" id="serviceInput" placeholder="">
                                     </div>
                                 </li>
-                                <li class="list-group-item text-center font-weight-bold">Robocizna całość [PLN]</li>
+                                <li class="list-group-item text-center font-weight-bold">Service total [PLN]</li>
                                 <li class="list-group-item text-center h5" id="serviceInputTotal"></li>
-                                <li class="list-group-item text-center font-weight-bold">Prowizja dystrybucyjna [PLN]</li>
+                                <li class="list-group-item text-center font-weight-bold">Distribution commission [PLN]</li>
                                 <li class="list-group-item text-center h5" id="commision"></li>
                             </ul>
                             <div class="card-body text-center">
-                                <button type="button" class="btn btn-success" id="calculateBtn">Oblicz</button>
-                                <button type="button" class="btn btn-warning" id="resetBtn">Resetuj</button>
+                                <button type="button" class="btn btn-success" id="calculateBtn">Calculate</button>
+                                <button type="button" class="btn btn-warning" id="resetBtn">Reset</button>
                             </div>
                             <div class="card-body text-center">
-                                <p class="card-text">* obliczenia zaokrąglone do części setnej</p>
+                                <p class="card-text">* calculations rounded to 2 decimal places</p>
                             </div>
                         </div>
                     </div>
@@ -267,24 +268,24 @@
                         <!-- DANE KLIENTA -->
                         <div class="border mb-3">
                             <ul class="list-unstyled mt-3 px-3">
-                                <li>Imię i nazwisko: <span class="font-weight-bold" id="fullName"></span></li>
-                                <li>Telefon: <span class="font-weight-bold" id="phoneNumber"></span></li>
-                                <li>Adres email: <span class="font-weight-bold" id="emailAdress"></span></li>
+                                <li>First name and surbname: <span class="font-weight-bold" id="fullName"></span></li>
+                                <li>Phone: <span class="font-weight-bold" id="phoneNumber"></span></li>
+                                <li>E-mail: <span class="font-weight-bold" id="emailAdress"></span></li>
                             </ul>
                             <ul class="list-unstyled mt-3 px-3">
-                                <li>Orientacja względem słońca: <span class="font-weight-bold" id="sun"></span></li>
-                                <li>Kąt nachylenia dachu: <span class="font-weight-bold" id="angle"></span></li>
-                                <li>Rodzaj pokrycia dachu: <span class="font-weight-bold" id="roof"></span></li>
+                                <li>Position towards Sun: <span class="font-weight-bold" id="sun"></span></li>
+                                <li>Roof tilt: <span class="font-weight-bold" id="angle"></span></li>
+                                <li>Roof covering: <span class="font-weight-bold" id="roof"></span></li>
                             </ul>
                         </div>
 
                         <!-- MATERIAŁY Z KOSZYKA -->
                         <div class="card border-0">
                             <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Materiały
+                                Items
                                 <div id='discountDiv'>
-                                    <button type="button" class="btn btn-primary" id="itemModalBtn">Dodaj</button>
-                                    <button type="button" class="btn btn-warning" id="raitemsResetBtn">Resetuj</button>
+                                    <button type="button" class="btn btn-primary" id="itemModalBtn">Add</button>
+                                    <button type="button" class="btn btn-warning" id="raitemsResetBtn">Reset</button>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush" id="itemContainer">
@@ -292,7 +293,7 @@
                             </ul>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
-                                    Razem
+                                    Total
                                     <span class="h5" id="cartTotal">0</span>
                                 </li>
                             </ul>
@@ -301,16 +302,16 @@
                         <!-- OPŁATY DODATKOWE MONTAZ + PROWIZJA -->
                         <div class="card border-0 mt-4">
                             <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Opłaty dodatkowe
-                                <span class="">Cena netto</span>
+                                Additional fees
+                                <span class="">Net price</span>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Montaż
+                                    Service
                                     <span class="h5" id="serviceUI"></span>
                                 </li>
                                 <li class="list-group-item bg-light d-flex justify-content-between align-items-center font-weight-bold">
-                                    Razem
+                                    Total
                                     <span class="h5" id="feeTotal"></span>
                                 </li>
                             </ul>
@@ -319,10 +320,10 @@
                         <!-- ZNIZKI -->
                         <div class="card border-0 mt-4">
                             <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Zniżki
+                                Discounts
                                 <div id='discountDiv'>
-                                    <button type="button" class="btn btn-primary" id="discountModalBtn">Dodaj</button>
-                                    <button type="button" class="btn btn-warning" id="radiscountResetBtn">Resetuj</button>
+                                    <button type="button" class="btn btn-primary" id="discountModalBtn">Add</button>
+                                    <button type="button" class="btn btn-warning" id="radiscountResetBtn">Reset</button>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush" id="discountContainer">
@@ -330,7 +331,7 @@
                             </ul>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item bg-light font-weight-bold  d-flex justify-content-between align-items-center" id="discountTotalList">
-                                    Razem
+                                    Total
                                     <span class="h5" id="discountTotal">0</span>
                                 </li>
                             </ul>
@@ -339,16 +340,16 @@
                         <!-- PODSUMOWANIE -->
                         <div class="card border-0 mt-4">
                             <div class="card-header d-flex justify-content-between align-items-center font-weight-bold">
-                                Podsumowanie
+                                Summary
                                 <span class="">Cena</span>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Materiały
+                                    Items
                                     <span class="h5" id="cartSummary">0</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Opłaty dodatkowe
+                                    Additional fees
                                     <span class="h5" id="feeSummary">0</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-end align-items-center">
@@ -359,11 +360,11 @@
                                     <span class="h5" id="VAT">0</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Zniżki
+                                    Discounts
                                     <span class="h5" id="discountSummary">0</span>
                                 </li>
                                 <li class="list-group-item bg-light font-weight-bold d-flex justify-content-between align-items-center">
-                                    Razem
+                                    Total
                                     <span class="h5 font-weight-bold" id="total">0</span>
                                 </li>
                             </ul>
@@ -376,7 +377,7 @@
         </div>
     </div>
 
-    <div class="w-100 text-center mb-5"><button class="btn btn-lg btn-primary" id="printPdfBtn">ZAPISZ DO PDF</button></div>
+    <div class="w-100 text-center mb-5"><button class="btn btn-lg btn-primary" id="printPdfBtn">SAVE TO PDF</button></div>
 
 </body>
 
