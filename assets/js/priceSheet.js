@@ -864,7 +864,9 @@ let appController = (function (dataCtrl, UICtrl) {
         if (data) {
             let element = document.getElementById('printPdf');
             let discountDivs = document.getElementById('discountDiv');
+            let itemDivs = document.getElementById('itemDiv');
             discountDivs.style.display = "none";
+            itemDivs.style.display = "none";
             let opt = {
                 margin: 2,
                 jsPDF: {
@@ -875,6 +877,7 @@ let appController = (function (dataCtrl, UICtrl) {
             html2pdf(element, opt);
             setTimeout(() => {
                 discountDivs.style.display = "block";
+                itemDivs.style.display = "block";
             }, 10000)
 
         } else {
