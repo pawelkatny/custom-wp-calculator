@@ -1,5 +1,4 @@
-// import { html2pdf } from 'html2pdf.bundle.min.js';
-
+//DATA CONTROLLER
 const dataController = (function () {
 
     //New discount object constructor
@@ -245,8 +244,8 @@ const dataController = (function () {
     }
 
     //Return object of methods that allow to change/manipulate stored data
-    return {
-        calcAll: function (inputData) {
+    return { //Run all calculations
+        calcAll: function (inputData) { 
             calcService(inputData);
             calcItems();
             calcDiscounts();
@@ -255,10 +254,10 @@ const dataController = (function () {
             calcVAT();
             calcTotal();
         },
-
-        updateModal: function (type, data) {
+        //Update/store data from modals
+        updateModal: function (type, data) { 
             switch (type) {
-                case 'cus':
+                case 'cus': 
                     customerData.name = data.customerName;
                     customerData.lastName = data.customerLastName;
                     customerData.phoneNumber = data.customerPhone;
@@ -267,9 +266,9 @@ const dataController = (function () {
                     customerData.angle = data.slopeAngle;
                     customerData.roof = data.roofType;
                     return customerData;
-                case 'ite':
+                case 'ite': 
                     return addItem(data);
-                case 'rai':
+                case 'rai': 
                     removeAllItems();
                     break;
                 case 'dis':
@@ -282,7 +281,7 @@ const dataController = (function () {
                     return priceSheet.update(data);
             }
         },
-
+        //Remove discount object from array
         removeDiscountItem: function (id) {
             let ids, index;
             ids = priceDATA.discounts.map((current) => {
@@ -295,7 +294,7 @@ const dataController = (function () {
                 priceDATA.discounts.splice(index, 1);
             }
         },
-
+        //Remove item object from array
         removeItem: function (id) {
             let ids, index;
             ids = priceDATA.items.map((current) => {
@@ -308,12 +307,12 @@ const dataController = (function () {
                 priceDATA.items.splice(index, 1);
             }
         },
-
+        //Reset all calculations results
         reset: function () {
             calcDATA.reset();
             priceDATA.reset();
         },
-
+        //Return object with all stored data
         getData: function () {
             return {
                 calculations: calcDATA,
@@ -321,23 +320,23 @@ const dataController = (function () {
                 sheet: priceSheet
             }
         },
-
+        //Check if input of customer data is correct
         checkCustomerData: function () {
             return Object.values(customerData).every(function (ele) {
                 return ele !== null && ele !== '';
             })
         },
-
+        //Get sheets data
         getSheet: function () {
             return priceSheet.toArray();
         }
     }
 
 })();
-
+//UI CONTROLLER
 let UIcontroller = (function () {
     const DOMstrings = {
-        //dane klienta
+        //Customer data 
         customerBtn: 'customerBtn',
         customerCloseBtn: 'customerCloseBtn',
         customerSaveBtn: 'customerSaveBtn',
@@ -357,7 +356,7 @@ let UIcontroller = (function () {
         sun: 'sun',
         angle: 'angle',
         roof: 'roof',
-        //edycja zmiennych
+        //Edit variables
         variableModal: 'variableModal',
         variableBtn: 'variableBtn',
         variableCloseBtn: 'variableCloseBtn',
@@ -373,7 +372,7 @@ let UIcontroller = (function () {
         sheet3: 'sheet3',
         sheet4: 'sheet4',
         sheet5: 'sheet5',
-        //items
+        //Items
         itemModal: 'itemModal',
         itemContainer: 'itemContainer',
         itemCloseBtn: 'itemsCloseBtn',
@@ -383,7 +382,8 @@ let UIcontroller = (function () {
         itemNameInput: 'itemNameInput',
         itemValueInput: 'itemValueInput',
         itemModalGrp: [this.itemModalBtn, this.itemCloseBtn, this.itemSaveBtn],
-        //zniżki
+        cartTotal: 'cartTotal',
+        //Discounts
         discountModalBtn: 'discountModal',
         discountModal: 'discountModal',
         discountCloseBtn: 'discountCloseBtn',
@@ -395,7 +395,8 @@ let UIcontroller = (function () {
         discountContainer: 'discountContainer',
         discountTotalList: 'discountTotalList',
         discountResetBtn: 'radiscountResetBtn',
-        //komorka z obliczeniami
+        discountTotal: 'discountTotal',
+        //Calculations sidebar
         sheetNumber: 'sheetNumber',
         varU: 'varU',
         varFi: 'varFi',
@@ -405,24 +406,19 @@ let UIcontroller = (function () {
         commision: 'commision',
         calculateBtn: 'calculateBtn',
         resetBtn: 'resetBtn',
-        //materiały
-        cartTotal: 'cartTotal',
-        //opłaty dodatkowe
+        //Additional fees
         serviceUI: 'serviceUI',
         commisionUI: 'commisionUI',
         feeTotal: 'feeTotal',
-        //zniżki
-        discountTotal: 'discountTotal',
-        //podsumowanie
+        //SUMMARY
         cartSummary: 'cartSummary',
         feeSummary: 'feeSummary',
         cartFeeSummary: 'cartFeeSummary',
         VAT: 'VAT',
         discountSummary: 'discountSummary',
         total: 'total',
-        //dolne menu
+        //Print button
         printPdfBtn: 'printPdfBtn'
-
     }
 
     const addItem = function (data) {
@@ -614,8 +610,7 @@ let UIcontroller = (function () {
 
             return inputs;
         },
-
-        //get input from modals depending on type
+        //Get input from modals depending on type
         getModalInput: function (type) {
             switch (type) {
                 case 'cus':
@@ -631,7 +626,6 @@ let UIcontroller = (function () {
             }
         },
 
-        //reset modal input 
         updateUI: function (calcData, priceData) {
             //varFi
             document.getElementById(DOMstrings.varFi).innerHTML = calcData.varFi.toFixed(2);
@@ -745,12 +739,6 @@ let UIcontroller = (function () {
             return DOMstrings;
         },
 
-        getCartTotal: function () {
-            return {
-                cartTotal: document.getElementById(DOMstrings.cartTotal).innerHTML,
-            }
-        },
-
         toggleModal: function (e) {
             let string = e.target.id.substring(0, 3);
             const customer = document.getElementById(DOMstrings.customerModal);
@@ -775,7 +763,7 @@ let UIcontroller = (function () {
                     break;
             }
         },
-
+        //Load sheets percent values to variables modal inputs
         onLoad: function (data) {
             document.getElementById(DOMstrings.sheet1).value = data[0];
             document.getElementById(DOMstrings.sheet2).value = data[1];
@@ -789,7 +777,7 @@ let UIcontroller = (function () {
 
 
 let appController = (function (dataCtrl, UICtrl) {
-
+    //Setup event listeners
     const setupListeners = function () {
         const DOM = UICtrl.getDOMstrings();
 
