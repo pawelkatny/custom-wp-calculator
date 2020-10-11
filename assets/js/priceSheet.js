@@ -2,6 +2,7 @@
 
 const dataController = (function () {
 
+    //New discount object constructor
     const Discount = function (id, type, desc, percent = 0, value) {
         this.ID = id,
             this.type = type,
@@ -10,12 +11,14 @@ const dataController = (function () {
             this.value = value
     }
 
+    //New item object contructor
     const Item = function (id, name, value) {
         this.ID = id,
             this.name = name,
             this.value = value
     }
 
+    //Stored values for each individual sheet 
     const priceSheet = {
         sheet1: 5,
         sheet2: 10,
@@ -40,6 +43,7 @@ const dataController = (function () {
         }
     }
 
+    //Stored data with variables used for calculations
     const calcDATA = {
         varU: 0,
         varFi: 0,
@@ -56,6 +60,7 @@ const dataController = (function () {
         }
     };
 
+    //Main app data 
     const priceDATA = {
         activeSheet: null,
         cartTotal: 0,
@@ -80,6 +85,7 @@ const dataController = (function () {
         },
     }
 
+    //Customer data
     const customerData = {
         name: null,
         lastName: null,
@@ -90,6 +96,7 @@ const dataController = (function () {
         roof: null
     }
 
+    //Additional fees calculationss
     const calcService = function (data) {
         let varU, varFi, varF, service;
         varU = data.varU;
@@ -105,6 +112,7 @@ const dataController = (function () {
         priceDATA.activeSheet = Object.values(priceSheet)[data.sheetNumber];
     }
 
+    //Calculate items total
     const calcItems = function () {
         let total = 0;
         priceDATA.items.forEach(ele => {
@@ -114,6 +122,7 @@ const dataController = (function () {
         priceDATA.cartTotal = total;
     }
 
+    //Calculate discounts total
     const calcDiscounts = function () {
         let total = 0;
         priceDATA.discounts.forEach(ele => {
@@ -123,6 +132,7 @@ const dataController = (function () {
         priceDATA.discountTotal = total;
     }
 
+    //Calculate commision value
     const calcCommision = function () {
         let total = 0;
         if (priceDATA.service > 0) {
@@ -131,6 +141,7 @@ const dataController = (function () {
         priceDATA.commision = total;
     }
 
+    //Calculate items + service + commision
     const calcItemsFee = function () {
         let total = 0;
         priceDATA.feeTotal = priceDATA.service + priceDATA.commision;
@@ -138,6 +149,7 @@ const dataController = (function () {
         priceDATA.cartFeeTotal = total;
     }
 
+    //Calculate VAT conditionaly
     const calcVAT = function () {
         let total = 0;
         let vat = 0.08;
@@ -150,12 +162,14 @@ const dataController = (function () {
         priceDATA.VAT = total;
     };
 
+    //Calculate TOTAL
     const calcTotal = function () {
         let total = 0;
         total = priceDATA.cartFeeTotal + priceDATA.discountTotal + priceDATA.VAT
         priceDATA.total = total;
     }
 
+    //Create new Item object, store it in array and return it
     const addItem = function (data) {
         let ID, name, value, newItem;
 
@@ -179,6 +193,7 @@ const dataController = (function () {
     }
 
 
+    //Create new Discount object, store it in array and return it
     const addDiscount = function (data) {
         let ID, type, name, value, percent, newDiscount;
 
@@ -215,18 +230,21 @@ const dataController = (function () {
         }
     }
 
+    //Remove all stored items from array and reset dependent values
     const removeAllItems = function () {
         priceDATA.items = [];
         priceDATA.cartTotal = 0;
         priceDATA.cartSummary = 0;
     }
 
+    //Remove all stored discounts from array and reset dependent values
     const removeAllDiscounts = function () {
         priceDATA.discounts = [];
         priceDATA.discountTotal = 0;
         priceDATA.discountPercent = 0;
     }
 
+    //Return object of methods that allow to change/manipulate stored data
     return {
         calcAll: function (inputData) {
             calcService(inputData);
@@ -775,9 +793,11 @@ let appController = (function (dataCtrl, UICtrl) {
     const setupListeners = function () {
         const DOM = UICtrl.getDOMstrings();
 
+        //Calculate/reset buttons for calculator
         document.getElementById(DOM.calculateBtn).addEventListener('click', updateApp);
         document.getElementById(DOM.resetBtn).addEventListener('click', reset);
-        //customer modal
+
+        //Toggle show/hide modals
         DOM.customerModalGrp.forEach(function (ele) {
             ele.addEventListener('click', UICtrl.toggleModal);
         })
@@ -794,6 +814,7 @@ let appController = (function (dataCtrl, UICtrl) {
             ele.addEventListener('click', UICtrl.toggleModal);
         })
 
+        //Button handlers
         document.getElementById(DOM.customerSaveBtn).addEventListener('click', updateModal);
         document.getElementById(DOM.itemSaveBtn).addEventListener('click', updateModal);
         document.getElementById(DOM.itemResetBtn).addEventListener('click', updateModal);
@@ -806,6 +827,7 @@ let appController = (function (dataCtrl, UICtrl) {
         document.getElementById(DOM.printPdfBtn).addEventListener('click', saveToPdf);
     }
 
+    //Update app - data and UI
     const updateApp = function () {
         let input = UICtrl.getInput();
 
@@ -817,6 +839,7 @@ let appController = (function (dataCtrl, UICtrl) {
         UICtrl.updateUI(data.calculations, data.prices);
     }
 
+    //Update modals - data and UI
     const updateModal = function (e, ID = null) {
         let string = e.target.id.substring(0, 3);
         let input = UICtrl.getModalInput(string);
@@ -825,6 +848,7 @@ let appController = (function (dataCtrl, UICtrl) {
         updateApp();
     }
 
+    //Remove target item from stored data and UI
     const removeItem = function (e) {
         let itemID;
 
@@ -837,6 +861,7 @@ let appController = (function (dataCtrl, UICtrl) {
         }
     }
 
+    //Remove target discount from stored data and UI
     const removeDiscountItem = function (e) {
         let itemID;
 
@@ -849,16 +874,19 @@ let appController = (function (dataCtrl, UICtrl) {
         }
     }
 
+    //Reset all inputs for customer data
     const resetCustomerInput = function () {
         UICtrl.resetCustomerInput();
     }
 
+    //Reset all calculations
     const reset = function () {
         dataCtrl.reset();
         UICtrl.clearInput();
         updateApp();
     }
 
+    //Save specified content to PDF with html2pdf clien-side application
     const saveToPdf = function () {
         let data = dataCtrl.checkCustomerData();
         if (data) {
@@ -886,6 +914,7 @@ let appController = (function (dataCtrl, UICtrl) {
     }
 
     return {
+        //Initializing application on page load
         init: function () {
             const priceSheets = dataCtrl.getSheet();
             setupListeners();
